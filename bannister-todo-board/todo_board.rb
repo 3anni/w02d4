@@ -3,34 +3,40 @@ require_relative "./list.rb"
 class TodoBoard
 
     def initialize(label)
-        @list = List.new(label)
+        @lists = Hash.new()
     end
 
     def get_command
         print "\nEnter a command: "
-        cmd, *args = gets.chomp.split(' ')
+        cmd, list, *args = gets.chomp.split(' ')
 
         case cmd
+        when "mklist"
+            @lists[list] = List.new(list)
+        when "ls"
+            puts @lists.keys
+        when "showall"
+            @lists.each { |title, list| list.print}
         when "mktodo"
-            args.length > 2 ? @list.add_item(*args) : @list.add_item(*args)
+            @lists[list].add_item(*args)
         when "up"
-            args.length > 1 ? @list.up(*args.map(&:to_i)) : @list.up(*args.map(&:to_i))
+            @lists[list].up(*args.map(&:to_i))
         when "down"
-            args.length > 1 ? @list.down(*args.map(&:to_i)) : @list.down(*args.map(&:to_i))
+            @lists[list].down(*args.map(&:to_i))
         when "swap"
-            @list.swap(args[0].to_i, args[1].to_i)
+            @lists[list].swap(args[0].to_i, args[1].to_i)
         when "sort"
-            @list.sort_by_date!
+            @lists[list].sort_by_date!
         when "priority"
-            @list.print_priority
+            @lists[list].print_priority
         when "print"
-            args.length > 0 ? @list.print_full_item(args[0].to_i) : @list.print
+            args.length > 0 ? @lists[list].print_full_item(args[0].to_i) : @lists[list].print
         when "toggle"
-            @list.toggle_item(args[0].to_i)
+            @lists[list].toggle_item(args[0].to_i)
         when "rm"
-            @list.remove_item(args[0].to_i)
+            @lists[list].remove_item(args[0].to_i)
         when "purge"
-            @list.purge
+            @lists[list].purge
         when "quit"
             return false
         else
