@@ -1,7 +1,7 @@
 require "date"
 
 class Item
-    attr_reader :deadline
+    attr_reader :deadline, :done
     attr_accessor :title, :description
 
     def valid_date?(string)
@@ -16,6 +16,7 @@ class Item
             throw new RuntimeError "deadline is not valid"
         end
         @description = description
+        @done = false
     end
 
     def deadline=(new_deadline)
@@ -24,5 +25,9 @@ class Item
         else
             @deadline = new_deadline
         end
+    end
+
+    def toggle
+        @done = !@done
     end
 end

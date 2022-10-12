@@ -50,30 +50,45 @@ class List
     end
 
     def print
-        puts "--------------------------------------------------"
+        puts "-------------------------------------------------------------------"
         puts " ".ljust(20) + @label.ljust(20)
-        puts "--------------------------------------------------"
-        puts "Index".ljust(10) + "| " + "Item".ljust(15) + "| Deadline"
-        puts "--------------------------------------------------"
+        puts "-------------------------------------------------------------------"
+        puts "Index".ljust(10) + "| " + "Item".ljust(15) + "| " + "Deadline".ljust(15) + "| done?"
+        puts "-------------------------------------------------------------------"
         @items.each_with_index do |item, idx|
-            puts idx.to_s.ljust(10) + "| " + item.title.to_s.ljust(15) + "| " + item.deadline.to_s
+            puts idx.to_s.ljust(10) + "| " + item.title.to_s.ljust(15) + "| " + item.deadline.to_s.ljust(15) + "| " + item.done.to_s
         end
+        return nil
     end
 
     def print_full_item(index)
         item = @items[index]
-        puts "--------------------------------------------------"
-        puts item.title.to_s.ljust(30) + item.deadline.to_s
-        puts item.description
-        puts "--------------------------------------------------"
+        puts "------------------------------------------------------------------"
+        puts item.title.to_s.ljust(40) + item.deadline.to_s.ljust(12) + item.done.to_s
+        puts item.description.ljust(40)
+        puts "------------------------------------------------------------------"
+        return nil
     end
 
     def print_priority
         print_full_item(0)
     end
 
-    def up(idx, amt)
-        if valid_index?(idx)
+    def up(idx, amt=1)
+        if !valid_index?(idx)
+            return false
+        else
+            while amt > 0
+                swap(idx, idx - 1)
+                idx -= 1
+                amt -= 1
+            end
+            return true
+        end
+    end
+
+    def down(idx, amt = 1)
+        if !valid_index?(idx)
             return false
         else
             while amt > 0
@@ -85,17 +100,24 @@ class List
         end
     end
 
-    def down(idx, amt)
-        if valid_index?(idx)
+    def sort_by_date!
+        @items.sort_by! { |item| item.deadline }
+    end
+
+    def toggle_item(idx)
+        @items[idx].toggle
+    end
+
+    def remove_item(idx)
+        if !valid_index?(idx)
             return false
         else
-            while amt > 0
-                swap(idx, idx + 1)
-                idx += 1
-                amt -= 1
-            end
+            @items.delete_at(idx)
             return true
         end
     end
 
+    def purge
+        @items.select! { |item| item.done != true}
+    end
 end

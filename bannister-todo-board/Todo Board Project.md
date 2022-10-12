@@ -1,34 +1,14 @@
-Todo Board Project
-In this project, we'll be creating a Todo Board to track tasks that need to be completed. You'll be creating this entire project from scratch, no skeleton or specs!
+ We expect a single "user" to have their own TodoBoard. In it's final form, a TodoBoard can contain many Lists. For example, perhaps a user wants one list to track bugs that they must fix in a program and another list to track things to pick up at the grocery store. A List can contain many Items. A single Item represents a task to be done. For example, the previously mentioned grocery store list may have an Item reminding the user to buy cheese.
 
-We'll be writing two phases of this project, with the second expanding functionality with a refactor:
-
-A board that manages a single todo list
-A board that manages multiple todo lists with extended features for lists and items
-Background
-Let's go over the basic structure of our application, a TodoBoard. We expect a single "user" to have their own TodoBoard. In it's final form, a TodoBoard can contain many Lists. For example, perhaps a user wants one list to track bugs that they must fix in a program and another list to track things to pick up at the grocery store. A List can contain many Items. A single Item represents a task to be done. For example, the previously mentioned grocery store list may have an Item reminding the user to buy cheese.
-
-Begin by creating a todo_board directory to house your project. This will be our working directory. Create the following files:
-
-todo_board/
-├── item.rb
-├── list.rb
-└── todo_board.rb
-We'll produce our code in a bottom-up fashion, this means we'll begin with the "smallest" component first. In the instructions below, we'll use ::method_name to refer to class methods and #method_name to refer to instance methods.
-
-Phase 1: One true list
-Our first iteration of this project will have the TodoBoard only manage a single List which contains many Items.
-
-Item
 Item::valid_date?(date_string)
 This method should accept a string and return a boolean indicating if it is valid date of the form YYYY-MM-DD where Y, M, and D are numbers, such as 1912-06-23. The month should be a number from 1 to 12 and the day should be a number from 1 to 31. Here are examples of the expected behavior:
 
-Item.valid_date?('2019-10-25') # true
-Item.valid_date?('1912-06-23') # true
-Item.valid_date?('2018-13-20') # false
-Item.valid_date?('2018-12-32') # false
-Item.valid_date?('10-25-2019') # false
-For simplicity, we'll be using well-formed strings to represent our dates. However, if we were building this application for real users, then we would use a more robust solution like Ruby's Date objects. This would allow us to implement advanced features like time of day, timezone, and other niceties. We'll save that battle for another day.
+    Item.valid_date?('2019-10-25') # true
+    Item.valid_date?('1912-06-23') # true
+    Item.valid_date?('2018-13-20') # false
+    Item.valid_date?('2018-12-32') # false
+    Item.valid_date?('10-25-2019') # false
+    For simplicity, we'll be using well-formed strings to represent our dates. However, if we were building this application for real users, then we would use a more robust solution like Ruby's Date objects. This would allow us to implement advanced features like time of day, timezone, and other niceties. We'll save that battle for another day.
 
 Item#initialize(title, deadline, description)
 This method should accept a title, deadline, and a description as arguments. These three pieces of data should be stored as instance variables of an Item. If the deadline is not a valid date, raise an error.
